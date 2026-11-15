@@ -1,3 +1,4 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -75,7 +76,10 @@ header{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px
 /* 포스터 카드 */
 .card{flex:none;width:clamp(118px,30vw,168px);scroll-snap-align:start;text-align:left;position:relative}
 .poster{aspect-ratio:2/3;max-width:100%;border-radius:6px;position:relative;overflow:hidden;
+  /* 인물 그림(img/NNN.jpg)이 있으면 배경으로, 없으면 시대 색만 보인다 */
   background:
+    linear-gradient(180deg,rgba(0,0,0,.35) 0%,transparent 22%,transparent 45%,rgba(0,0,0,.82) 100%),
+    var(--img,none) center/cover no-repeat,
     repeating-linear-gradient(135deg,rgba(255,255,255,.035) 0 2px,transparent 2px 9px),
     linear-gradient(160deg,var(--c1) 0%,var(--c2) 100%);
   box-shadow:0 6px 18px rgba(0,0,0,.45);transition:transform .2s}
@@ -330,7 +334,7 @@ function card(p){
   const [c1,c2]=colors(p); const pr=pos[p.n];
   const pct = pr&&pr.d ? Math.min(100,pr.t/pr.d*100) : 0;
   return `<button class="card" data-n="${p.n}" aria-label="${esc(p.name)} 자세히 보기">
-    <div class="poster" style="--c1:${c1};--c2:${c2}">
+    <div class="poster" style="--c1:${c1};--c2:${c2};--img:url('img/${String(p.n).padStart(3,'0')}.jpg')">
       <span class="no">No.${String(p.n).padStart(3,'0')}</span>
       <span class="nm">${esc(p.name)}</span>
       <span class="seal">${esc(firstChar(p))}</span>
@@ -517,3 +521,5 @@ renderHero(); renderChips(); renderRows();
 </script>
 </body>
 </html>
+
+</body></html>
